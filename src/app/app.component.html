@@ -1,5 +1,7 @@
 <!-- Product grid  "./node_modules/bootstrap/dist/css/bootstrap.min.css" -->
-<table>
+<div class="container" style="display: flex; flex-direction: column;">
+<div>
+<table class="ulborder">
     <thead>
         <tr>
             <th>Image</th>
@@ -14,23 +16,25 @@
     </thead>
     <thead>
         <tr>
-           <td><input type="text" placeholder="Search Products Name" [(ngModel)]="searchText" (keyup)="filterProducts()"></td>
-           <td><input type="text" placeholder="Search Details" [(ngModel)]="searchDetail" (keyup)="filterProductsDetail()"></td>
-           <td><input type="text" placeholder="Search Price" [(ngModel)]="searchPrice" (keyup)="filterProducts()"></td>
-           <td><input type="text" placeholder="Search Date" [(ngModel)]="searchText" (keyup)="filterProducts()"></td>
+           <td></td>
+           <td><input type="text" placeholder="Search Products by Name" [(ngModel)]="searchText" (keyup)="filterProducts()"></td>
+           <td><input type="text" placeholder="Search Products by Details" [(ngModel)]="searchDetail" (keyup)="filterProductsDetail()"></td>
+           <td><input type="text" placeholder="Search Products by Price" [(ngModel)]="searchPrice" (keyup)="filterProductsPrice()"></td>
+           <!-- <td><input type="text" placeholder="Search Date" [(ngModel)]="searchText" (keyup)="filterProducts()"></td> -->
+           <!-- <td> <input type="text" id="date_range" name="date_range"></td> -->
         </tr>
     </thead>
     <tbody>
         <!-- Sample product rows (Replace with dynamic data) -->
        
-        <tr *ngFor="let pro of filtered">
-            <td><img src="" alt="Product 2"></td>
-            <td>{{ pro.name }}</td>
-            <td>{{ pro.details }}</td>
-            <td>{{ pro.price }}</td>
-            <td>{{ pro.quantity }}</td>
-            <td>{{ pro.price * pro.quantity }}</td>
-            <td>{{ pro.createdDate | date: 'yyyy-MM-dd' }}</td>
+        <tr *ngFor="let pro of paginationFiltered">
+            <td><img src="./assets/pexels-madebymath-90946.jpg" alt="Product 2" style="width: 50px; height: 50px; display: block; margin: 0 auto;"></td>
+            <td class="textCentre">{{ pro.name }}</td>
+            <td class="textCentre">{{ pro.details }}</td>
+            <td class="textCentre">{{ pro.price }}</td>
+            <td class="textCentre">{{ pro.quantity }}</td>
+            <td class="textCentre">{{ pro.price * pro.quantity }}</td>
+            <td class="textCentre">{{ pro.createdDate | date: 'yyyy-MM-dd' }}</td>
 
             <td>
                 <button (click)="editProduct(pro)">Edit</button>
@@ -40,29 +44,54 @@
         <!-- Add more product rows as needed -->
     </tbody>
 </table>
-<button (click)="addNew()" >Add New</button>
-<div *ngIf="shoFrom" id="addForm" class="form-container">
-    <h2>Add New Product</h2>
+</div>
+<div style="display: inline-flex; width: 1025px;">
+<div class="pagination" style="float: left; display: inline-flex;">
+      <button style="border: 1px solid black; padding: 0px 7px;" (click)="previousButton('pre')" #preButton>Previous</button>
+      <button [class.highlighted]="hightlightButton === index" style="border: 1px solid black; padding: 0px 7px;" *ngFor="let index of paginationArr" (click)="selectPage(index)">{{ index }}</button>
+      <button style="border: 1px solid black; padding: 0px 7px;" (click)="previousButton('next')" #nextButton>Next</button>
+    </div>
+<button (click)="addNew()" style="margin-left: 705px; background-color: rgb(143, 232, 143);"> + Add New</button>
+</div>
+</div>
+
+<div *ngIf="shoFrom" id="addForm" class="form-container formCss" style="margin-left: 70vh;">
+    <div style="text-align: center; font-size: large; font-weight: bold;">Add New Product</div>
     <form action="/submit_product" method="post">
-        <label for="product_name">Product Name:</label><br>
-        <input type="text" [(ngModel)]="productObj.name" id="product_name" name="product_name" required ><br><br>
+        <div class="inline">
+            <div style="margin-right: 10px;">
+                <label for="product_name">Product Name:</label><br>
+                <input type="text" [(ngModel)]="productObj.name" id="product_name" name="product_name" required >
+            </div>
+            <div>
+                <label for="quantity">Date:</label><br>
+                <input type="date" [(ngModel)]="productObj.createdDate" id="date" name="date" required>
+            </div>
+        </div><br>
+       
 
         <label for="description">Details:</label><br>
-        <input type="text" [(ngModel)]="productObj.details" id="product_name" name="product_details" required ><br><br>
-
+        <input type="text" [(ngModel)]="productObj.details" id="product_name" name="product_details" required >
+      <div class="inline">
+        <div style="margin-right: 40px;">
         <label for="price">Price:</label><br>
-        <input [(ngModel)]="productObj.price" id="price" name="price"  required><br><br>
-
-        <label for="quantity">Quantity:</label><br>
-        <input type="number" [(ngModel)]="productObj.quantity" id="quantity" name="quantity" required><br><br>
-
-        <label for="quantity">Date:</label><br>
-        <input type="date" [(ngModel)]="productObj.createdDate" id="date" name="date" required><br><br>
+        <input [(ngModel)]="productObj.price" id="price" name="price" class="inputWidth"  required>
+        </div>
+        <div style="margin-right: 40px;">
+            <label for="quantity">Quantity:</label><br>
+            <input type="number" [(ngModel)]="productObj.quantity" id="quantity" name="quantity" class="inputWidth"  required>
+        </div>
+        <div style="margin-right: 40px;">
+            <label for="total">Total:</label><br>
+            <div>{{ productObj.price*productObj.quantity}}</div>
+        </div>
+        
+     </div><br><br>
      
 
 
-        <input type="submit" value="Submit" (click)="submitForm()" *ngIf="!editButton">
-        <input type="submit" value="Edit" (click)="updateForm()" *ngIf="editButton" >
+        <input type="submit" value="Submit" style="margin-left: 120px;" (click)="submitForm()" *ngIf="!editButton">
+        <input type="submit" value="Edit" style="margin-left: 120px;" (click)="updateForm()" *ngIf="editButton" >
         <button (click)=cancleForm()>Cancle</button>
     </form>
 </div>

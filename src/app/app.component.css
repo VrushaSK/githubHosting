@@ -1,8 +1,81 @@
 .form-container {
     margin: 0 auto; /* Center the container horizontally */
-    width: 50%; /* Set the width of the container */
-    padding: 20px; /* Add padding around the container */
+    width: 25%; /* Set the width of the container */
+    padding: 15px; /* Add padding around the container */
     border: 1px solid #ccc; /* Add border */
-    border-radius: 5px; /* Add border radius */
+    border-radius: 1px; /* Add border radius */
   }
+
+
+  .textCentre{
+    text-align: center;
+  }
+
+  .ulborder {
+    border-top: 1px solid rgb(6, 6, 6); /* Adding border to the top side */
+    border-bottom: 1px solid black; /* Adding border to the bottom side */
+  }
+
+  .inputWidth{
+    width : 50px;
+  }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust height as needed */
+   
+}
+
+.inline{
+  display: inline-flex;
+}
+
+.formCss{
+position: absolute;
+top: 0px;
+background-color: #d3cccc;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 3px 10px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+}
+
+.pagination a.active {
+  background-color: #4395d9;
+  color: white;
+  border: 1px solid #4395d9;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+.pagination a:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination a:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.box {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  margin: 5px;
+}
+.highlighted {
+  background-color: rgb(143, 232, 143); /* Example highlighting style */
+}
   
